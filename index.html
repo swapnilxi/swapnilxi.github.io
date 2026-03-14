@@ -10,7 +10,7 @@
 
 <style>
 
-/* Animated grid background */
+/* background grid */
 
 body{
 background:#020617;
@@ -29,24 +29,10 @@ background-image:
 linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
 linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
 background-size:60px 60px;
-animation:moveGrid 25s linear infinite;
 z-index:-1;
 }
 
-@keyframes moveGrid{
-0%{transform:translateY(0)}
-100%{transform:translateY(60px)}
-}
-
-.glass{
-background:rgba(15,23,42,0.6);
-backdrop-filter:blur(12px);
-border:1px solid rgba(255,255,255,0.06);
-}
-
-.glow{
-box-shadow:0 0 50px rgba(56,189,248,0.2);
-}
+/* gradient hero text */
 
 .gradient-text{
 background:linear-gradient(90deg,#38bdf8,#818cf8);
@@ -54,26 +40,30 @@ background:linear-gradient(90deg,#38bdf8,#818cf8);
 color:transparent;
 }
 
-.card{
-transition:all 0.3s ease;
+/* glass cards */
+
+.glass{
+background:rgba(15,23,42,0.7);
+border:1px solid rgba(255,255,255,0.06);
+backdrop-filter:blur(12px);
 }
 
-.card:hover{
-transform:translateY(-5px);
-box-shadow:0 20px 60px rgba(0,0,0,0.5);
+/* glow */
+
+.glow{
+box-shadow:0 0 50px rgba(56,189,248,0.2);
 }
 
-/* Scroll animation */
+/* section divider */
 
-.fade{
-opacity:0;
-transform:translateY(40px);
-transition:all 1s ease;
+.section{
+border-top:1px solid rgba(255,255,255,0.06);
 }
 
-.fade.show{
-opacity:1;
-transform:translateY(0);
+/* subtle gradient separator */
+
+.section-glow{
+background: radial-gradient(circle at center, rgba(56,189,248,0.08), transparent 70%);
 }
 
 </style>
@@ -84,6 +74,7 @@ transform:translateY(0);
 
 <div class="grid-bg"></div>
 
+
 <!-- NAVBAR -->
 
 <header class="max-w-7xl mx-auto flex justify-between items-center p-6">
@@ -91,9 +82,9 @@ transform:translateY(0);
 <h1 class="text-2xl font-bold text-sky-400">Starva</h1>
 
 <nav class="space-x-8 text-slate-300">
-<a href="#vision" class="hover:text-white">Vision</a>
-<a href="#platform" class="hover:text-white">Platform</a>
-<a href="#agents" class="hover:text-white">AI Agents</a>
+<a href="#">Vision</a>
+<a href="#">Platform</a>
+<a href="#">Agents</a>
 </nav>
 
 </header>
@@ -104,7 +95,7 @@ transform:translateY(0);
 
 <section class="text-center py-28 px-6">
 
-<h1 class="text-5xl md:text-6xl font-bold leading-tight fade">
+<h1 class="text-5xl md:text-6xl font-bold leading-tight">
 
 <span class="gradient-text">
 
@@ -118,15 +109,15 @@ of Future Cities
 
 </h1>
 
-<p class="text-slate-400 mt-6 max-w-2xl mx-auto fade">
+<p class="text-slate-400 mt-6 max-w-2xl mx-auto">
 
 Starva is an AI collaboration platform where governments,
-companies, investors and citizens design infrastructure,
-allocate capital and build future cities together.
+companies and citizens design infrastructure,
+allocate capital and plan city growth together.
 
 </p>
 
-<div class="mt-10 flex justify-center gap-6 fade">
+<div class="mt-10 flex justify-center gap-6">
 
 <button class="px-7 py-3 bg-gradient-to-r from-sky-500 to-indigo-500 rounded-xl glow">
 Explore Platform
@@ -142,90 +133,63 @@ Read Vision
 
 
 
-<!-- VISION -->
-
-<section id="vision" class="max-w-5xl mx-auto px-6 py-24 text-center fade">
-
-<h2 class="text-3xl font-semibold mb-6">
-
-Cities are Financial Systems
-
-</h2>
-
-<p class="text-slate-400 text-lg">
-
-Every city is a complex financial engine.
-Infrastructure, housing, energy and transport
-require coordinated capital allocation.
-
-Starva allows stakeholders to simulate,
-plan and optimize these systems with AI.
-
-</p>
-
-</section>
-
-
-
 <!-- PLATFORM -->
 
-<section id="platform" class="max-w-6xl mx-auto px-6 py-24 fade">
+<section class="section section-glow max-w-6xl mx-auto px-6 py-24">
 
 <h2 class="text-3xl font-semibold text-center mb-14">
-
 Platform Capabilities
-
 </h2>
 
 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-<div class="glass card p-6 rounded-xl glow">
+<div class="glass p-6 rounded-xl glow">
+
+<div class="text-sky-400 text-2xl mb-3">📊</div>
 
 <h3 class="font-semibold mb-2">Financial Strategist</h3>
 
 <p class="text-slate-400 text-sm">
-
-AI financial modeling and macroeconomic simulation.
-
+AI financial modeling and macroeconomic simulations.
 </p>
 
 </div>
 
 
-<div class="glass card p-6 rounded-xl glow">
+<div class="glass p-6 rounded-xl glow">
+
+<div class="text-indigo-400 text-2xl mb-3">💰</div>
 
 <h3 class="font-semibold mb-2">Capital Allocator</h3>
 
 <p class="text-slate-400 text-sm">
-
-Optimize budgets across infrastructure and city projects.
-
+Optimize infrastructure budgets and capital allocation.
 </p>
 
 </div>
 
 
-<div class="glass card p-6 rounded-xl glow">
+<div class="glass p-6 rounded-xl glow">
+
+<div class="text-pink-400 text-2xl mb-3">⚠️</div>
 
 <h3 class="font-semibold mb-2">Risk Manager</h3>
 
 <p class="text-slate-400 text-sm">
-
-Detect economic stress and infrastructure risk early.
-
+Predict financial and operational risks.
 </p>
 
 </div>
 
 
-<div class="glass card p-6 rounded-xl glow">
+<div class="glass p-6 rounded-xl glow">
+
+<div class="text-green-400 text-2xl mb-3">🏙</div>
 
 <h3 class="font-semibold mb-2">City Planning AI</h3>
 
 <p class="text-slate-400 text-sm">
-
-Evaluate construction plans, payback period and breakeven.
-
+Evaluate construction plans and infrastructure investment.
 </p>
 
 </div>
@@ -236,9 +200,9 @@ Evaluate construction plans, payback period and breakeven.
 
 
 
-<!-- AI AGENT ARCHITECTURE -->
+<!-- AI AGENTS -->
 
-<section id="agents" class="max-w-6xl mx-auto px-6 py-24 fade">
+<section class="section max-w-6xl mx-auto px-6 py-24">
 
 <h2 class="text-3xl font-semibold text-center mb-14">
 
@@ -246,44 +210,28 @@ AI Agent Architecture
 
 </h2>
 
-<div class="grid md:grid-cols-3 gap-8 text-center">
+<div class="flex flex-wrap justify-center gap-6 text-center">
 
-<div class="glass p-6 rounded-xl">
-
-<h3 class="font-semibold mb-2">Monitoring Agent</h3>
-
-<p class="text-slate-400 text-sm">
-
-Tracks financial signals and infrastructure data.
-
-</p>
-
+<div class="glass p-6 rounded-xl w-56">
+Monitoring Agent
 </div>
 
+<div class="text-sky-400 text-2xl self-center">→</div>
 
-<div class="glass p-6 rounded-xl">
-
-<h3 class="font-semibold mb-2">Strategy Agent</h3>
-
-<p class="text-slate-400 text-sm">
-
-Simulates capital allocation and long-term plans.
-
-</p>
-
+<div class="glass p-6 rounded-xl w-56">
+Strategy Agent
 </div>
 
+<div class="text-sky-400 text-2xl self-center">→</div>
 
-<div class="glass p-6 rounded-xl">
+<div class="glass p-6 rounded-xl w-56">
+Risk Agent
+</div>
 
-<h3 class="font-semibold mb-2">Risk Agent</h3>
+<div class="text-sky-400 text-2xl self-center">→</div>
 
-<p class="text-slate-400 text-sm">
-
-Identifies economic and operational risks.
-
-</p>
-
+<div class="glass p-6 rounded-xl w-56">
+City Planning Agent
 </div>
 
 </div>
@@ -292,32 +240,45 @@ Identifies economic and operational risks.
 
 
 
-<!-- INTERACTIVE SIMULATION -->
+<!-- SIMULATION -->
 
-<section class="max-w-5xl mx-auto px-6 py-24 text-center fade">
+<section class="section section-glow max-w-5xl mx-auto px-6 py-24 text-center">
 
 <h2 class="text-3xl font-semibold mb-10">
 
-City Simulation
+City Growth Simulation
 
 </h2>
 
 <p class="text-slate-400 mb-10">
 
-Adjust capital investment to simulate city growth.
+Example outcome when infrastructure investment is balanced.
 
 </p>
 
-<div class="glass p-10 rounded-xl">
+<div class="glass p-10 rounded-xl max-w-2xl mx-auto">
 
-<input type="range" min="0" max="100" value="50"
-class="w-full mb-6"
-oninput="updateSimulation(this.value)">
+<div class="grid grid-cols-3 gap-6 text-center">
 
-<div id="simulationResult" class="text-xl font-semibold text-sky-400">
+<div>
+<div class="text-slate-400 text-sm">Investment</div>
+<div class="text-xl font-semibold text-sky-400">50%</div>
+</div>
 
-Balanced Growth
+<div>
+<div class="text-slate-400 text-sm">Growth Rate</div>
+<div class="text-xl font-semibold text-green-400">3.5%</div>
+</div>
 
+<div>
+<div class="text-slate-400 text-sm">Risk Level</div>
+<div class="text-xl font-semibold text-yellow-400">Medium</div>
+</div>
+
+</div>
+
+<div class="mt-6 text-lg font-semibold text-sky-400">
+Balanced Development Scenario
 </div>
 
 </div>
@@ -333,48 +294,6 @@ Balanced Growth
 Starva • Designing the economic systems of future cities
 
 </footer>
-
-
-
-<script>
-
-/* scroll animation */
-
-const observer = new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("show")
-}
-})
-})
-
-document.querySelectorAll(".fade").forEach(el=>{
-observer.observe(el)
-})
-
-
-/* simulation */
-
-function updateSimulation(value){
-
-const result = document.getElementById("simulationResult")
-
-if(value < 30){
-result.innerText = "Underinvestment Risk"
-result.className="text-xl font-semibold text-red-400"
-}
-else if(value < 70){
-result.innerText = "Balanced Growth"
-result.className="text-xl font-semibold text-sky-400"
-}
-else{
-result.innerText = "Rapid Expansion"
-result.className="text-xl font-semibold text-green-400"
-}
-
-}
-
-</script>
 
 </body>
 </html>
