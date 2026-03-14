@@ -10,10 +10,10 @@
 
 <style>
 
-/* background grid */
+/* Animated grid background */
 
 body{
-background:#020617;
+background:radial-gradient(circle at top,#0f172a 0,#020617 55%,#000 100%);
 color:white;
 font-family:system-ui;
 overflow-x:hidden;
@@ -29,10 +29,24 @@ background-image:
 linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
 linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
 background-size:60px 60px;
+animation:moveGrid 25s linear infinite;
 z-index:-1;
 }
 
-/* gradient hero text */
+@keyframes moveGrid{
+0%{transform:translateY(0)}
+100%{transform:translateY(60px)}
+}
+
+.glass{
+background:linear-gradient(135deg,rgba(15,23,42,0.9),rgba(15,23,42,0.6));
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,0.06);
+}
+
+.glow{
+box-shadow:0 0 50px rgba(56,189,248,0.2);
+}
 
 .gradient-text{
 background:linear-gradient(90deg,#38bdf8,#818cf8);
@@ -40,30 +54,72 @@ background:linear-gradient(90deg,#38bdf8,#818cf8);
 color:transparent;
 }
 
-/* glass cards */
-
-.glass{
-background:rgba(15,23,42,0.7);
-border:1px solid rgba(255,255,255,0.06);
-backdrop-filter:blur(12px);
+.card{
+transition:all 0.3s ease;
 }
 
-/* glow */
-
-.glow{
-box-shadow:0 0 50px rgba(56,189,248,0.2);
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 20px 60px rgba(0,0,0,0.5);
 }
 
-/* section divider */
-
-.section{
-border-top:1px solid rgba(255,255,255,0.06);
+.section-shell{
+position:relative;
 }
 
-/* subtle gradient separator */
+.section-shell::before{
+content:"";
+position:absolute;
+inset:0;
+border-radius:1.75rem;
+padding:1px;
+background:linear-gradient(90deg,rgba(56,189,248,0.4),rgba(129,140,248,0.4),rgba(56,189,248,0.1));
+mask:linear-gradient(#000,#000) content-box,linear-gradient(#000,#000);
+mask-composite:exclude;
+pointer-events:none;
+}
 
-.section-glow{
-background: radial-gradient(circle at center, rgba(56,189,248,0.08), transparent 70%);
+.icon-circle{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:40px;
+height:40px;
+border-radius:999px;
+background:radial-gradient(circle at 30% 0,#38bdf8,#1d4ed8);
+box-shadow:0 0 30px rgba(56,189,248,0.5);
+}
+
+.icon-circle svg{
+width:22px;
+height:22px;
+}
+
+.section-label{
+display:inline-flex;
+align-items:center;
+gap:0.5rem;
+padding:0.25rem 0.75rem;
+border-radius:999px;
+background:rgba(15,23,42,0.9);
+border:1px solid rgba(148,163,184,0.4);
+color:#e5e7eb;
+font-size:0.75rem;
+letter-spacing:0.08em;
+text-transform:uppercase;
+}
+
+/* Scroll animation */
+
+.fade{
+opacity:0;
+transform:translateY(40px);
+transition:all 1s ease;
+}
+
+.fade.show{
+opacity:1;
+transform:translateY(0);
 }
 
 </style>
@@ -74,17 +130,27 @@ background: radial-gradient(circle at center, rgba(56,189,248,0.08), transparent
 
 <div class="grid-bg"></div>
 
-
 <!-- NAVBAR -->
 
 <header class="max-w-7xl mx-auto flex justify-between items-center p-6">
 
-<h1 class="text-2xl font-bold text-sky-400">Starva</h1>
+<div class="flex items-center gap-3">
+<div class="icon-circle">
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 3L13.7639 8.23607L19 10L13.7639 11.7639L12 17L10.2361 11.7639L5 10L10.2361 8.23607L12 3Z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
+</svg>
+</div>
+<div>
+<h1 class="text-2xl font-bold gradient-text">Starva</h1>
+<p class="text-xs text-slate-400 uppercase tracking-[0.18em]">Financial OS for cities</p>
+</div>
+</div>
 
-<nav class="space-x-8 text-slate-300">
-<a href="#">Vision</a>
-<a href="#">Platform</a>
-<a href="#">Agents</a>
+<nav class="hidden md:flex items-center gap-8 text-slate-300 text-sm">
+<a href="#vision" class="hover:text-white">Vision</a>
+<a href="#platform" class="hover:text-white">Platform</a>
+<a href="#agents" class="hover:text-white">AI Agents</a>
+<a href="#simulation" class="hover:text-white">Simulation</a>
 </nav>
 
 </header>
@@ -93,9 +159,14 @@ background: radial-gradient(circle at center, rgba(56,189,248,0.08), transparent
 
 <!-- HERO -->
 
-<section class="text-center py-28 px-6">
+<section class="text-center py-20 md:py-28 px-6">
 
-<h1 class="text-5xl md:text-6xl font-bold leading-tight">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-sky-500/40 bg-sky-500/5 text-xs text-sky-200 mb-6 fade">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+Live sandbox for capital design
+</div>
+
+<h1 class="text-4xl md:text-6xl font-bold leading-tight fade">
 
 <span class="gradient-text">
 
@@ -109,23 +180,59 @@ of Future Cities
 
 </h1>
 
-<p class="text-slate-400 mt-6 max-w-2xl mx-auto">
+<p class="text-slate-400 mt-6 max-w-2xl mx-auto fade">
 
-Starva is an AI collaboration platform where governments,
-companies and citizens design infrastructure,
-allocate capital and plan city growth together.
+Starva is an AI-native collaboration platform where governments,
+companies, investors and citizens co-design infrastructure,
+allocate capital and forecast impact before a single rupee is spent.
 
 </p>
 
-<div class="mt-10 flex justify-center gap-6">
+<div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 fade">
 
-<button class="px-7 py-3 bg-gradient-to-r from-sky-500 to-indigo-500 rounded-xl glow">
-Explore Platform
+<button class="px-7 py-3.5 bg-gradient-to-r from-sky-500 via-cyan-400 to-indigo-500 rounded-xl glow text-sm font-medium">
+Launch City Workspace
 </button>
 
-<button class="px-7 py-3 border border-slate-600 rounded-xl">
-Read Vision
+<button class="px-7 py-3.5 border border-slate-600/80 rounded-xl text-sm font-medium flex items-center justify-center gap-2 bg-slate-950/40">
+<span>Read Vision Memo</span>
+<span class="text-xs text-slate-400">5 min</span>
 </button>
+
+</div>
+
+</section>
+
+
+
+<!-- VISION -->
+
+<section id="vision" class="max-w-5xl mx-auto px-6 py-20 md:py-24 text-center fade section-shell">
+
+<div class="relative z-10 py-10 md:py-14 px-4 md:px-10">
+
+<div class="mb-5 flex justify-center">
+<span class="section-label">
+<svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none">
+<path d="M3 11.5L10 4.5L14 8.5L21 1.5M21 1.5V7.5M21 1.5H15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+System-level view
+</span>
+</div>
+
+<h2 class="text-3xl font-semibold mb-4">
+
+Cities are Financial Systems
+
+</h2>
+
+<p class="text-slate-400 text-lg leading-relaxed max-w-3xl mx-auto">
+
+Every city is a complex financial engine. Infrastructure, housing, energy and transport
+are all capital flows running through one shared ledger. Starva lets you see this system
+as a live balance sheet, then stress-test it with AI before policy or capital moves.
+
+</p>
 
 </div>
 
@@ -135,62 +242,97 @@ Read Vision
 
 <!-- PLATFORM -->
 
-<section class="section section-glow max-w-6xl mx-auto px-6 py-24">
+<section id="platform" class="max-w-6xl mx-auto px-6 py-20 md:py-24 fade section-shell">
 
-<h2 class="text-3xl font-semibold text-center mb-14">
-Platform Capabilities
+<div class="relative z-10 py-10 md:py-14 px-4 md:px-10">
+
+<div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+<div class="space-y-3">
+<span class="section-label">
+<svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none">
+<path d="M4 18L10 6L14 14L20 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="4" cy="18" r="1.2" fill="currentColor"/>
+<circle cx="10" cy="6" r="1.2" fill="currentColor"/>
+<circle cx="14" cy="14" r="1.2" fill="currentColor"/>
+<circle cx="20" cy="4" r="1.2" fill="currentColor"/>
+</svg>
+Platform capabilities
+</span>
+<h2 class="text-3xl font-semibold">
+
+Instrument the city like a balance sheet
+
 </h2>
-
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-
-<div class="glass p-6 rounded-xl glow">
-
-<div class="text-sky-400 text-2xl mb-3">📊</div>
-
-<h3 class="font-semibold mb-2">Financial Strategist</h3>
-
-<p class="text-slate-400 text-sm">
-AI financial modeling and macroeconomic simulations.
+</div>
+<p class="text-slate-400 text-sm max-w-md">
+Each module is an AI agent tuned to real-world city finance: from macro strategy to project-level breakeven.
 </p>
+</div>
 
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+
+<div class="glass card p-6 rounded-xl glow flex flex-col gap-3">
+<div class="icon-circle mb-2">
+<svg viewBox="0 0 24 24" fill="none">
+<path d="M5 19V9L12 5L19 9V19H5Z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
+<path d="M9 14H15" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
+</svg>
+</div>
+<h3 class="font-semibold">Financial Strategist</h3>
+<p class="text-slate-400 text-sm">
+
+AI financial modeling and macroeconomic simulation across 10–20 year horizons.
+
+</p>
 </div>
 
 
-<div class="glass p-6 rounded-xl glow">
-
-<div class="text-indigo-400 text-2xl mb-3">💰</div>
-
-<h3 class="font-semibold mb-2">Capital Allocator</h3>
-
+<div class="glass card p-6 rounded-xl glow flex flex-col gap-3">
+<div class="icon-circle mb-2">
+<svg viewBox="0 0 24 24" fill="none">
+<rect x="4" y="5" width="16" height="14" rx="2" stroke="white" stroke-width="1.3"/>
+<path d="M8 10H16M8 14H13" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
+</svg>
+</div>
+<h3 class="font-semibold">Capital Allocator</h3>
 <p class="text-slate-400 text-sm">
-Optimize infrastructure budgets and capital allocation.
-</p>
 
+Optimize budgets across infrastructure portfolios, with trade-offs explained in plain language.
+
+</p>
 </div>
 
 
-<div class="glass p-6 rounded-xl glow">
-
-<div class="text-pink-400 text-2xl mb-3">⚠️</div>
-
-<h3 class="font-semibold mb-2">Risk Manager</h3>
-
+<div class="glass card p-6 rounded-xl glow flex flex-col gap-3">
+<div class="icon-circle mb-2">
+<svg viewBox="0 0 24 24" fill="none">
+<circle cx="12" cy="12" r="7" stroke="white" stroke-width="1.3"/>
+<path d="M12 9V12L14 14" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
+</svg>
+</div>
+<h3 class="font-semibold">Risk Manager</h3>
 <p class="text-slate-400 text-sm">
-Predict financial and operational risks.
-</p>
 
+Detect economic stress and infrastructure risk early with scenario dashboards.
+
+</p>
 </div>
 
 
-<div class="glass p-6 rounded-xl glow">
-
-<div class="text-green-400 text-2xl mb-3">🏙</div>
-
-<h3 class="font-semibold mb-2">City Planning AI</h3>
-
+<div class="glass card p-6 rounded-xl glow flex flex-col gap-3">
+<div class="icon-circle mb-2">
+<svg viewBox="0 0 24 24" fill="none">
+<path d="M4 17L10 7L14 13L20 5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4 20H20" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
+</svg>
+</div>
+<h3 class="font-semibold">City Planning AI</h3>
 <p class="text-slate-400 text-sm">
-Evaluate construction plans and infrastructure investment.
+
+Evaluate project pipelines, payback period and breakeven timelines in rupees.
+
 </p>
+</div>
 
 </div>
 
@@ -200,38 +342,79 @@ Evaluate construction plans and infrastructure investment.
 
 
 
-<!-- AI AGENTS -->
+<!-- AI AGENT ARCHITECTURE -->
 
-<section class="section max-w-6xl mx-auto px-6 py-24">
+<section id="agents" class="max-w-6xl mx-auto px-6 py-20 md:py-24 fade section-shell">
 
-<h2 class="text-3xl font-semibold text-center mb-14">
+<div class="relative z-10 py-10 md:py-14 px-4 md:px-10">
+
+<div class="flex flex-col items-center text-center mb-10">
+<span class="section-label mb-4">
+<svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none">
+<path d="M4 6H20L18.5 18H5.5L4 6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M9 10.5H15" stroke="#38bdf8" stroke-width="1.4" stroke-linecap="round"/>
+</svg>
+Multi-agent system
+</span>
+<h2 class="text-3xl font-semibold mb-3">
 
 AI Agent Architecture
 
 </h2>
-
-<div class="flex flex-wrap justify-center gap-6 text-center">
-
-<div class="glass p-6 rounded-xl w-56">
-Monitoring Agent
+<p class="text-slate-400 text-sm max-w-2xl">
+Composable agents that monitor, propose and challenge each other before recommendations reach humans.
+</p>
 </div>
 
-<div class="text-sky-400 text-2xl self-center">→</div>
+<div class="grid md:grid-cols-3 gap-6 text-left md:text-center">
 
-<div class="glass p-6 rounded-xl w-56">
-Strategy Agent
+<div class="glass p-6 rounded-xl flex flex-col gap-3">
+<div class="icon-circle mx-auto md:mx-auto">
+<svg viewBox="0 0 24 24" fill="none">
+<path d="M4 7H20V17H4V7Z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
+<path d="M7 10.5H11M13 10.5H17M7 13.5H10" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
+</svg>
+</div>
+<h3 class="font-semibold mt-1 text-center">Monitoring Agent</h3>
+<p class="text-slate-400 text-sm text-center md:text-center">
+
+Tracks macro signals, project KPI streams and infra telemetry in one place.
+
+</p>
 </div>
 
-<div class="text-sky-400 text-2xl self-center">→</div>
 
-<div class="glass p-6 rounded-xl w-56">
-Risk Agent
+<div class="glass p-6 rounded-xl flex flex-col gap-3">
+<div class="icon-circle mx-auto md:mx-auto">
+<svg viewBox="0 0 24 24" fill="none">
+<path d="M5 18V9L12 5L19 9V18H5Z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
+<path d="M9 13H15" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
+</svg>
+</div>
+<h3 class="font-semibold mt-1 text-center">Strategy Agent</h3>
+<p class="text-slate-400 text-sm text-center md:text-center">
+
+Simulates capital allocation, policy choices and their impact on rupee flows.
+
+</p>
 </div>
 
-<div class="text-sky-400 text-2xl self-center">→</div>
 
-<div class="glass p-6 rounded-xl w-56">
-City Planning Agent
+<div class="glass p-6 rounded-xl flex flex-col gap-3">
+<div class="icon-circle mx-auto md:mx-auto">
+<svg viewBox="0 0 24 24" fill="none">
+<circle cx="12" cy="12" r="7" stroke="white" stroke-width="1.3"/>
+<path d="M12 9V12L14 14" stroke="#f97316" stroke-width="1.3" stroke-linecap="round"/>
+</svg>
+</div>
+<h3 class="font-semibold mt-1 text-center">Risk Agent</h3>
+<p class="text-slate-400 text-sm text-center md:text-center">
+
+Identifies economic and operational risks, surfacing early-warning alerts.
+
+</p>
+</div>
+
 </div>
 
 </div>
@@ -240,45 +423,63 @@ City Planning Agent
 
 
 
-<!-- SIMULATION -->
+<!-- INTERACTIVE SIMULATION -->
 
-<section class="section section-glow max-w-5xl mx-auto px-6 py-24 text-center">
+<section id="simulation" class="max-w-5xl mx-auto px-6 py-20 md:py-24 text-center fade section-shell">
 
-<h2 class="text-3xl font-semibold mb-10">
+<div class="relative z-10 py-10 md:py-14 px-4 md:px-10">
 
-City Growth Simulation
+<div class="mb-5 flex justify-center">
+<span class="section-label">
+<svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none">
+<path d="M5 17L10 9L14 13L19 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5 20H19" stroke="#38bdf8" stroke-width="1.4" stroke-linecap="round"/>
+</svg>
+Investment sandbox
+</span>
+</div>
+
+<h2 class="text-3xl font-semibold mb-4">
+
+City Simulation
 
 </h2>
 
-<p class="text-slate-400 mb-10">
+<p class="text-slate-400 mb-10 max-w-xl mx-auto">
 
-Example outcome when infrastructure investment is balanced.
+Adjust annual capital investment to see how rupee flows translate into growth,
+risk and capacity for the next decade.
 
 </p>
 
-<div class="glass p-10 rounded-xl max-w-2xl mx-auto">
+<div class="glass p-8 md:p-10 rounded-2xl text-left md:text-center">
 
-<div class="grid grid-cols-3 gap-6 text-center">
-
-<div>
-<div class="text-slate-400 text-sm">Investment</div>
-<div class="text-xl font-semibold text-sky-400">50%</div>
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+<p class="text-sm text-slate-300">Annual capital deployed</p>
+<div class="text-right">
+<div id="investmentLabel" class="text-2xl font-semibold text-sky-400">
+₹5,000 Cr
+</div>
+<p class="text-xs text-slate-500">Nominal, city-wide</p>
+</div>
 </div>
 
-<div>
-<div class="text-slate-400 text-sm">Growth Rate</div>
-<div class="text-xl font-semibold text-green-400">3.5%</div>
+<input type="range" min="0" max="100" value="50"
+class="w-full mb-4 accent-sky-500"
+oninput="updateSimulation(this.value)">
+
+<div class="flex justify-between text-xs text-slate-500 mb-6">
+<span>₹0 Cr</span>
+<span>₹5,000 Cr</span>
+<span>₹10,000 Cr</span>
 </div>
 
-<div>
-<div class="text-slate-400 text-sm">Risk Level</div>
-<div class="text-xl font-semibold text-yellow-400">Medium</div>
-</div>
+<div id="simulationResult" class="text-lg md:text-xl font-semibold text-sky-400">
+
+Balanced Growth
 
 </div>
 
-<div class="mt-6 text-lg font-semibold text-sky-400">
-Balanced Development Scenario
 </div>
 
 </div>
@@ -294,6 +495,58 @@ Balanced Development Scenario
 Starva • Designing the economic systems of future cities
 
 </footer>
+
+
+
+<script>
+
+/* scroll animation */
+
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("show")
+}
+})
+})
+
+document.querySelectorAll(".fade").forEach(el=>{
+observer.observe(el)
+})
+
+
+/* simulation */
+
+function updateSimulation(value){
+
+const result = document.getElementById("simulationResult")
+const investmentLabel = document.getElementById("investmentLabel")
+
+// Map 0–100 slider to ₹0–10,000 Cr
+const minCr = 0
+const maxCr = 10000
+const amountCr = Math.round(minCr + ((maxCr - minCr) * (value / 100)))
+
+// Format with commas: 10000 -> 10,000
+const formatted = amountCr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+investmentLabel.innerText = `₹${formatted} Cr`
+
+if(value < 30){
+result.innerText = "Underinvestment Risk"
+result.className="text-xl font-semibold text-red-400"
+}
+else if(value < 70){
+result.innerText = "Balanced Growth"
+result.className="text-xl font-semibold text-sky-400"
+}
+else{
+result.innerText = "Rapid Expansion"
+result.className="text-xl font-semibold text-green-400"
+}
+
+}
+
+</script>
 
 </body>
 </html>
