@@ -7,6 +7,7 @@
 <title>Starva — Financial Systems for Future Cities</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/2.0.0/iconify-icon.min.js"></script>
 
 <style>
 
@@ -87,12 +88,31 @@ width:40px;
 height:40px;
 border-radius:999px;
 background:radial-gradient(circle at 30% 0,#38bdf8,#1d4ed8);
-box-shadow:0 0 30px rgba(56,189,248,0.5);
+box-shadow:0 0 30px rgba(56,189,248,0.5),0 0 50px rgba(56,189,248,0.25);
 }
 
+.icon-circle iconify-icon,
 .icon-circle svg{
 width:22px;
 height:22px;
+}
+
+/* Hero Icons glow – use .icon-glow on icon containers */
+.icon-glow,
+.icon-circle iconify-icon{
+filter:drop-shadow(0 0 6px rgba(56,189,248,0.6)) drop-shadow(0 0 12px rgba(56,189,248,0.35));
+}
+.section-label .icon-glow{
+filter:drop-shadow(0 0 4px rgba(56,189,248,0.5)) drop-shadow(0 0 8px rgba(56,189,248,0.25));
+}
+.sim-outcome[data-state="risk"] .outcome-icon iconify-icon{
+filter:drop-shadow(0 0 6px rgba(248,113,113,0.6)) drop-shadow(0 0 10px rgba(248,113,113,0.35));
+}
+.sim-outcome[data-state="balanced"] .outcome-icon iconify-icon{
+filter:drop-shadow(0 0 6px rgba(56,189,248,0.6)) drop-shadow(0 0 10px rgba(56,189,248,0.35));
+}
+.sim-outcome[data-state="expansion"] .outcome-icon iconify-icon{
+filter:drop-shadow(0 0 6px rgba(74,222,128,0.6)) drop-shadow(0 0 10px rgba(74,222,128,0.35));
 }
 
 .section-label{
@@ -107,6 +127,90 @@ color:#e5e7eb;
 font-size:0.75rem;
 letter-spacing:0.08em;
 text-transform:uppercase;
+}
+
+/* Simulation outcome pills + icons */
+.sim-outcome{
+display:inline-flex;
+align-items:center;
+gap:0.75rem;
+padding:0.875rem 1.25rem;
+border-radius:1rem;
+font-size:1rem;
+font-weight:600;
+transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+border:1px solid transparent;
+}
+.sim-outcome .outcome-icon{
+flex-shrink:0;
+width:28px;
+height:28px;
+transition:transform 0.3s ease;
+}
+.sim-outcome.active .outcome-icon{
+transform:scale(1.1);
+}
+.sim-outcome[data-state="risk"]{
+background:rgba(248,113,113,0.12);
+border-color:rgba(248,113,113,0.35);
+color:#fca5a5;
+}
+.sim-outcome[data-state="balanced"]{
+background:rgba(56,189,248,0.12);
+border-color:rgba(56,189,248,0.35);
+color:#7dd3fc;
+}
+.sim-outcome[data-state="expansion"]{
+background:rgba(74,222,128,0.12);
+border-color:rgba(74,222,128,0.35);
+color:#86efac;
+}
+.sim-outcome:not(.active){
+opacity:0.5;
+transform:scale(0.96);
+}
+
+/* Modern range slider */
+.sim-slider-wrap{
+position:relative;
+padding:0.5rem 0;
+}
+.sim-slider-wrap input[type="range"]{
+-webkit-appearance:none;
+appearance:none;
+width:100%;
+height:10px;
+border-radius:999px;
+background:linear-gradient(90deg,rgba(248,113,113,0.3),rgba(56,189,248,0.4),rgba(74,222,128,0.4));
+outline:none;
+}
+.sim-slider-wrap input[type="range"]::-webkit-slider-thumb{
+-webkit-appearance:none;
+appearance:none;
+width:24px;
+height:24px;
+border-radius:50%;
+background:linear-gradient(135deg,#38bdf8,#6366f1);
+box-shadow:0 0 0 4px rgba(15,23,42,0.9),0 4px 12px rgba(56,189,248,0.4);
+cursor:grab;
+transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sim-slider-wrap input[type="range"]::-webkit-slider-thumb:hover{
+transform:scale(1.08);
+box-shadow:0 0 0 4px rgba(15,23,42,0.9),0 6px 20px rgba(56,189,248,0.5);
+}
+.sim-slider-wrap input[type="range"]::-moz-range-thumb{
+width:24px;
+height:24px;
+border-radius:50%;
+border:none;
+background:linear-gradient(135deg,#38bdf8,#6366f1);
+box-shadow:0 0 0 4px rgba(15,23,42,0.9),0 4px 12px rgba(56,189,248,0.4);
+cursor:grab;
+transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+.sim-slider-wrap input[type="range"]::-moz-range-thumb:hover{
+transform:scale(1.08);
 }
 
 /* Scroll animation */
@@ -136,9 +240,7 @@ transform:translateY(0);
 
 <div class="flex items-center gap-3">
 <div class="icon-circle">
-<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M12 3L13.7639 8.23607L19 10L13.7639 11.7639L12 17L10.2361 11.7639L5 10L10.2361 8.23607L12 3Z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:sparkles" width="22" height="22" style="color:white"></iconify-icon>
 </div>
 <div>
 <h1 class="text-2xl font-bold gradient-text">Starva</h1>
@@ -213,9 +315,7 @@ Launch City Workspace
 
 <div class="mb-5 flex justify-center">
 <span class="section-label">
-<svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none">
-<path d="M3 11.5L10 4.5L14 8.5L21 1.5M21 1.5V7.5M21 1.5H15" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:pencil-square" class="icon-glow w-4 h-4 text-sky-400"></iconify-icon>
 System-level view
 </span>
 </div>
@@ -249,13 +349,7 @@ as a live balance sheet, then stress-test it with AI before policy or capital mo
 <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
 <div class="space-y-3">
 <span class="section-label">
-<svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none">
-<path d="M4 18L10 6L14 14L20 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="4" cy="18" r="1.2" fill="currentColor"/>
-<circle cx="10" cy="6" r="1.2" fill="currentColor"/>
-<circle cx="14" cy="14" r="1.2" fill="currentColor"/>
-<circle cx="20" cy="4" r="1.2" fill="currentColor"/>
-</svg>
+<iconify-icon icon="heroicons-outline:chart-bar" class="icon-glow w-4 h-4 text-sky-400"></iconify-icon>
 Platform capabilities
 </span>
 <h2 class="text-3xl font-semibold">
@@ -273,10 +367,7 @@ Each module is an AI agent tuned to real-world city finance: from macro strategy
 
 <div class="glass card p-6 rounded-xl glow flex flex-col gap-3">
 <div class="icon-circle mb-2">
-<svg viewBox="0 0 24 24" fill="none">
-<path d="M5 19V9L12 5L19 9V19H5Z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
-<path d="M9 14H15" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:building-office" width="22" height="22" style="color:white"></iconify-icon>
 </div>
 <h3 class="font-semibold">Financial Strategist</h3>
 <p class="text-slate-400 text-sm">
@@ -289,10 +380,7 @@ AI financial modeling and macroeconomic simulation across 10–20 year horizons.
 
 <div class="glass card p-6 rounded-xl glow flex flex-col gap-3">
 <div class="icon-circle mb-2">
-<svg viewBox="0 0 24 24" fill="none">
-<rect x="4" y="5" width="16" height="14" rx="2" stroke="white" stroke-width="1.3"/>
-<path d="M8 10H16M8 14H13" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:banknotes" width="22" height="22" style="color:white"></iconify-icon>
 </div>
 <h3 class="font-semibold">Capital Allocator</h3>
 <p class="text-slate-400 text-sm">
@@ -305,10 +393,7 @@ Optimize budgets across infrastructure portfolios, with trade-offs explained in 
 
 <div class="glass card p-6 rounded-xl glow flex flex-col gap-3">
 <div class="icon-circle mb-2">
-<svg viewBox="0 0 24 24" fill="none">
-<circle cx="12" cy="12" r="7" stroke="white" stroke-width="1.3"/>
-<path d="M12 9V12L14 14" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:shield-check" width="22" height="22" style="color:white"></iconify-icon>
 </div>
 <h3 class="font-semibold">Risk Manager</h3>
 <p class="text-slate-400 text-sm">
@@ -321,10 +406,7 @@ Detect economic stress and infrastructure risk early with scenario dashboards.
 
 <div class="glass card p-6 rounded-xl glow flex flex-col gap-3">
 <div class="icon-circle mb-2">
-<svg viewBox="0 0 24 24" fill="none">
-<path d="M4 17L10 7L14 13L20 5" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M4 20H20" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:map" width="22" height="22" style="color:white"></iconify-icon>
 </div>
 <h3 class="font-semibold">City Planning AI</h3>
 <p class="text-slate-400 text-sm">
@@ -350,10 +432,7 @@ Evaluate project pipelines, payback period and breakeven timelines in rupees.
 
 <div class="flex flex-col items-center text-center mb-10">
 <span class="section-label mb-4">
-<svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none">
-<path d="M4 6H20L18.5 18H5.5L4 6Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
-<path d="M9 10.5H15" stroke="#38bdf8" stroke-width="1.4" stroke-linecap="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:cpu-chip" class="icon-glow w-4 h-4 text-sky-400"></iconify-icon>
 Multi-agent system
 </span>
 <h2 class="text-3xl font-semibold mb-3">
@@ -370,10 +449,7 @@ Composable agents that monitor, propose and challenge each other before recommen
 
 <div class="glass p-6 rounded-xl flex flex-col gap-3">
 <div class="icon-circle mx-auto md:mx-auto">
-<svg viewBox="0 0 24 24" fill="none">
-<path d="M4 7H20V17H4V7Z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
-<path d="M7 10.5H11M13 10.5H17M7 13.5H10" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:eye" width="22" height="22" style="color:white"></iconify-icon>
 </div>
 <h3 class="font-semibold mt-1 text-center">Monitoring Agent</h3>
 <p class="text-slate-400 text-sm text-center md:text-center">
@@ -386,10 +462,7 @@ Tracks macro signals, project KPI streams and infra telemetry in one place.
 
 <div class="glass p-6 rounded-xl flex flex-col gap-3">
 <div class="icon-circle mx-auto md:mx-auto">
-<svg viewBox="0 0 24 24" fill="none">
-<path d="M5 18V9L12 5L19 9V18H5Z" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
-<path d="M9 13H15" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:light-bulb" width="22" height="22" style="color:white"></iconify-icon>
 </div>
 <h3 class="font-semibold mt-1 text-center">Strategy Agent</h3>
 <p class="text-slate-400 text-sm text-center md:text-center">
@@ -402,10 +475,7 @@ Simulates capital allocation, policy choices and their impact on rupee flows.
 
 <div class="glass p-6 rounded-xl flex flex-col gap-3">
 <div class="icon-circle mx-auto md:mx-auto">
-<svg viewBox="0 0 24 24" fill="none">
-<circle cx="12" cy="12" r="7" stroke="white" stroke-width="1.3"/>
-<path d="M12 9V12L14 14" stroke="#f97316" stroke-width="1.3" stroke-linecap="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:exclamation-triangle" width="22" height="22" style="color:white"></iconify-icon>
 </div>
 <h3 class="font-semibold mt-1 text-center">Risk Agent</h3>
 <p class="text-slate-400 text-sm text-center md:text-center">
@@ -431,10 +501,7 @@ Identifies economic and operational risks, surfacing early-warning alerts.
 
 <div class="mb-5 flex justify-center">
 <span class="section-label">
-<svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none">
-<path d="M5 17L10 9L14 13L19 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M5 20H19" stroke="#38bdf8" stroke-width="1.4" stroke-linecap="round"/>
-</svg>
+<iconify-icon icon="heroicons-outline:arrow-trending-up" class="icon-glow w-4 h-4 text-sky-400"></iconify-icon>
 Investment sandbox
 </span>
 </div>
@@ -454,30 +521,46 @@ risk and capacity for the next decade.
 
 <div class="glass p-8 md:p-10 rounded-2xl text-left md:text-center">
 
-<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
 <p class="text-sm text-slate-300">Annual capital deployed</p>
 <div class="text-right">
-<div id="investmentLabel" class="text-2xl font-semibold text-sky-400">
+<div id="investmentLabel" class="text-2xl font-semibold text-sky-400 tabular-nums">
 ₹5,000 Cr
 </div>
 <p class="text-xs text-slate-500">Nominal, city-wide</p>
 </div>
 </div>
 
-<input type="range" min="0" max="100" value="50"
-class="w-full mb-4 accent-sky-500"
+<div class="sim-slider-wrap mb-2">
+<input type="range" id="capitalSlider" min="0" max="100" value="50"
+class="w-full"
 oninput="updateSimulation(this.value)">
-
-<div class="flex justify-between text-xs text-slate-500 mb-6">
+</div>
+<div class="flex justify-between text-xs text-slate-500 mb-8">
 <span>₹0 Cr</span>
 <span>₹5,000 Cr</span>
 <span>₹10,000 Cr</span>
 </div>
 
-<div id="simulationResult" class="text-lg md:text-xl font-semibold text-sky-400">
-
-Balanced Growth
-
+<div class="flex flex-wrap justify-center gap-3" id="outcomePills" role="status" aria-live="polite">
+<div class="sim-outcome" data-state="risk" id="outcome-risk">
+<span class="outcome-icon" aria-hidden="true">
+<iconify-icon icon="heroicons-outline:exclamation-triangle" width="28" height="28"></iconify-icon>
+</span>
+<span>Underinvestment Risk</span>
+</div>
+<div class="sim-outcome active" data-state="balanced" id="outcome-balanced">
+<span class="outcome-icon" aria-hidden="true">
+<iconify-icon icon="heroicons-outline:scale" width="28" height="28"></iconify-icon>
+</span>
+<span>Balanced Growth</span>
+</div>
+<div class="sim-outcome" data-state="expansion" id="outcome-expansion">
+<span class="outcome-icon" aria-hidden="true">
+<iconify-icon icon="heroicons-outline:arrow-trending-up" width="28" height="28"></iconify-icon>
+</span>
+<span>Rapid Expansion</span>
+</div>
 </div>
 
 </div>
@@ -518,32 +601,24 @@ observer.observe(el)
 /* simulation */
 
 function updateSimulation(value){
-
-const result = document.getElementById("simulationResult")
 const investmentLabel = document.getElementById("investmentLabel")
+const pills = { risk: document.getElementById("outcome-risk"), balanced: document.getElementById("outcome-balanced"), expansion: document.getElementById("outcome-expansion") }
 
 // Map 0–100 slider to ₹0–10,000 Cr
 const minCr = 0
 const maxCr = 10000
 const amountCr = Math.round(minCr + ((maxCr - minCr) * (value / 100)))
-
-// Format with commas: 10000 -> 10,000
 const formatted = amountCr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 investmentLabel.innerText = `₹${formatted} Cr`
 
-if(value < 30){
-result.innerText = "Underinvestment Risk"
-result.className="text-xl font-semibold text-red-400"
-}
-else if(value < 70){
-result.innerText = "Balanced Growth"
-result.className="text-xl font-semibold text-sky-400"
-}
-else{
-result.innerText = "Rapid Expansion"
-result.className="text-xl font-semibold text-green-400"
-}
+// Activate the pill + icon for current state
+let activeId = "balanced"
+if(Number(value) < 30) activeId = "risk"
+else if(Number(value) >= 70) activeId = "expansion"
 
+Object.keys(pills).forEach(state => {
+pills[state].classList.toggle("active", state === activeId)
+})
 }
 
 </script>
