@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CFOBuddy — CFO → CEO Intelligence for Quick Commerce</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['system-ui', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfeff',
+              100: '#cffafe',
+              500: '#22d3ee',
+              600: '#06b6d4',
+              700: '#0891b2',
+            },
+          },
+          boxShadow: {
+            'glow': '0 0 40px rgba(34,211,238,0.35)',
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #020617 0, #020617 35%, #000 100%);
+    }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.25;
+      z-index: -1;
+      animation: grid-move 32s linear infinite;
+    }
+
+    @keyframes grid-move {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(80px); }
+    }
+
+    .glass {
+      background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(15,23,42,0.85));
+      border: 1px solid rgba(148,163,184,0.3);
+      backdrop-filter: blur(14px);
+    }
+
+    .pill {
+      background: radial-gradient(circle at 0 0, rgba(34,211,238,0.15), transparent 55%);
+    }
+
+    .badge {
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.6);
+      letter-spacing: 0.18em;
+    }
+
+    .fade {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: all 0.9s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+    .fade.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .signal-tab[aria-selected="true"] {
+      border-color: rgba(148,163,184,0.6);
+      background: radial-gradient(circle at 0 0, rgba(34,211,238,0.18), rgba(15,23,42,0.95));
+      box-shadow: 0 20px 45px rgba(15,23,42,0.9);
+    }
+
+    .float-soft {
+      animation: float-soft 11s ease-in-out infinite;
+    }
+
+    .float-soft:nth-child(2n) {
+      animation-duration: 13s;
+      animation-delay: -3s;
+    }
+
+    @keyframes float-soft {
+      0%   { transform: translateY(0px) translateZ(0) scale(1); }
+      25%  { transform: translateY(-6px) translateZ(0) scale(1.01); }
+      50%  { transform: translateY(0px) translateZ(0) scale(1); }
+      75%  { transform: translateY(6px) translateZ(0) scale(0.995); }
+      100% { transform: translateY(0px) translateZ(0) scale(1); }
+    }
+  </style>
+</head>
+
+<body class="text-slate-50 font-sans antialiased">
+  <div class="bg-grid"></div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl bg-gradient-to-br from-brand-500 via-cyan-500 to-sky-500 flex items-center justify-center shadow-glow">
+          <!-- Heroicon: Bolt -->
+          <svg class="h-5 w-5 text-slate-950" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3.53 11.06A.75.75 0 0 1 4.28 10h5.043L9.22 3.285A.75.75 0 0 1 10.557 2.8l9 8.25a.75.75 0 0 1-.51 1.3h-5.043l.103 6.715a.75.75 0 0 1-1.337.463z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-semibold tracking-[0.2em] uppercase text-slate-100">CFOBuddy</p>
+          <p class="text-[0.68rem] text-slate-400 uppercase tracking-[0.28em]">CFO → CEO Intelligence</p>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-xs font-medium text-slate-300">
+        <a href="#problem" class="hover:text-white">Problem</a>
+        <a href="#solution" class="hover:text-white">Solution</a>
+        <a href="#personas" class="hover:text-white">For CFOs & CEOs</a>
+        <a href="#signals" class="hover:text-white">CEO Signals</a>
+        <a href="#architecture" class="hover:text-white">Architecture</a>
+        <a href="#phases" class="hover:text-white">Build Plan</a>
+      </nav>
+
+      <a href="#contact" class="hidden sm:inline-flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-full border border-brand-500/60 bg-slate-900/50 hover:bg-slate-900 transition">
+        <!-- Heroicon: Phone Arrow Up Right -->
+        <svg class="h-4 w-4 text-brand-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                d="M7.5 5.25h11.25M18.75 5.25v11.25M18.75 5.25 6 18" />
+        </svg>
+        <span>Founder intro</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="top" class="max-w-6xl mx-auto px-4 sm:px-6 pb-24 pt-10 space-y-24 md:space-y-32">
+
+    <!-- HERO -->
+    <section class="pt-4 md:pt-10 fade">
+      <div class="pill rounded-3xl p-[1px]">
+        <div class="glass rounded-[1.4rem] px-6 sm:px-10 pt-7 pb-10 md:pt-9 md:pb-12 relative overflow-hidden">
+          <!-- subtle glow blob -->
+          <div class="pointer-events-none absolute -top-40 right-10 h-64 w-64 rounded-full bg-brand-500/10 blur-3xl"></div>
+
+          <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-10 relative z-10">
+            <div class="max-w-xl">
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full badge text-[0.63rem] text-slate-300 mb-4">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-70"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                </span>
+                AI decision OS for Quick Commerce
+              </div>
+
+              <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight">
+                Calm CFO → CEO
+                <span class="block text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-cyan-300 to-sky-400">
+                  intelligence
+                </span>
+                for quick commerce.
+              </h1>
+
+              <p class="mt-4 text-sm sm:text-[0.95rem] text-slate-300 leading-relaxed max-w-xl">
+                <span class="font-semibold text-slate-100">CFOBuddy</span> turns noisy finance and ops into three calm,
+                always-on CEO signals — Cash Health, Fulfillment Flow and Unit Economics.
+              </p>
+
+              <div class="mt-6 flex flex-col sm:flex-row gap-4">
+                <a href="#signals"
+                   class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-brand-500 via-cyan-400 to-sky-500 text-slate-950 shadow-glow">
+                  <!-- Heroicon: Sparkles -->
+                  <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 4.5 7.5 9 3 10.5 7.5 12 9 16.5 10.5 12 15 10.5 10.5 9 9 4.5Zm9-1.5-1.125 3.375L13.5 7.5l3.375 1.125L18 12l1.125-3.375L22.5 7.5l-3.375-1.125L18 3Z"/>
+                  </svg>
+                  View CEO signals
+                </a>
+
+                <a href="#solution"
+                   class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold border border-slate-700 bg-slate-950/60 hover:bg-slate-900 transition">
+                  <!-- Heroicon: Document Text -->
+                  <svg class="h-5 w-5 text-slate-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                          d="M9 7.5h3.75M9 10.5h3.75M9 13.5h2.25M6.75 3h6.91c.28 0 .55.11.75.31l3.78 3.78c.2.2.31.47.31.75v10.16A1.5 1.5 0 0 1 16.99 21H6.75A1.5 1.5 0 0 1 5.25 19.5v-15A1.5 1.5 0 0 1 6.75 3Z" />
+                  </svg>
+                  How it works
+                </a>
+              </div>
+
+              <p class="mt-4 text-[0.75rem] text-slate-400">
+                “If the CEO feels calm opening the app, finance is doing its job.”
+              </p>
+            </div>
+
+            <!-- Right: Snapshot card -->
+            <div class="w-full md:w-80 lg:w-96">
+              <div class="glass rounded-2xl p-4 sm:p-5 shadow-xl border border-slate-700/70">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-medium text-slate-300 uppercase tracking-[0.18em]">Pulse • CEO View</span>
+                  <!-- Heroicon: Device Phone Mobile -->
+                  <svg class="h-5 w-5 text-brand-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+                       viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                          d="M9 2.25h6A2.25 2.25 0 0 1 17.25 4.5v15a2.25 2.25 0 0 1-2.25 2.25H9A2.25 2.25 0 0 1 6.75 19.5v-15A2.25 2.25 0 0 1 9 2.25Zm0 0h6M9 2.25h6M9.75 18h4.5" />
+                  </svg>
+                </div>
+
+                <div class="space-y-3 text-xs">
+                  <div class="flex items-center justify-between rounded-xl bg-slate-900/80 px-3 py-2 border border-emerald-500/40">
+                    <div class="flex items-center gap-2">
+                      <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+                      <span class="font-medium text-slate-100">Cash Health</span>
+                    </div>
+                    <span class="text-emerald-300 font-semibold">🟢 11 months runway</span>
+                  </div>
+
+                  <div class="flex items-center justify-between rounded-xl bg-slate-900/70 px-3 py-2 border border-amber-400/40">
+                    <div class="flex items-center gap-2">
+                      <span class="h-2 w-2 rounded-full bg-amber-400"></span>
+                      <span class="font-medium text-slate-100">Fulfillment Flow</span>
+                    </div>
+                    <span class="text-amber-200">🟡 East zone congestion</span>
+                  </div>
+
+                  <div class="flex items-center justify-between rounded-xl bg-slate-900/70 px-3 py-2 border border-sky-400/40">
+                    <div class="flex items-center gap-2">
+                      <span class="h-2 w-2 rounded-full bg-sky-400"></span>
+                      <span class="font-medium text-slate-100">Unit Economics</span>
+                    </div>
+                    <span class="text-sky-200">Margins stable, discounts rising</span>
+                  </div>
+                </div>
+
+                <p class="mt-4 text-[0.7rem] text-slate-400 leading-relaxed">
+                  Behind these three emojis is a full decision intelligence stack:
+                  Agentic RAG, CV signals and CFO-grade financial models.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section id="problem" class="fade">
+      <div class="grid md:grid-cols-[1.2fr,1fr] gap-8 items-start">
+        <div>
+          <div class="inline-flex items-center gap-2 badge px-3 py-1.5 rounded-full text-[0.63rem] text-slate-300 mb-4">
+            <!-- Heroicon: Exclamation Triangle -->
+            <svg class="h-3.5 w-3.5 text-amber-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 9v4.5M12 16.5h.007M10.478 4.5 3.62 16.125A1.5 1.5 0 0 0 4.92 18.375h14.16a1.5 1.5 0 0 0 1.3-2.25L13.522 4.5a1.5 1.5 0 0 0-2.598 0Z" />
+            </svg>
+            Why quick commerce CFOs struggle
+          </div>
+
+            <h2 class="text-2xl md:text-3xl font-semibold mb-3">
+              Dashboards don’t fix unit economics.
+            </h2>
+
+          <p class="text-sm text-slate-300 mb-4 leading-relaxed">
+            Quick commerce teams drown in dashboards while runway, dark store congestion
+            and unit economics quietly break in the background.
+          </p>
+
+          <div class="grid sm:grid-cols-2 gap-3 text-sm">
+            <div class="glass rounded-xl p-4">
+              <p class="text-xs font-semibold text-slate-400 mb-1 uppercase tracking-[0.16em]">Today</p>
+              <ul class="space-y-1.5 text-slate-200">
+                <li>• Fragmented dashboards and reports</li>
+                <li>• Lagging, rear-view signals</li>
+                <li>• Opaque operations data</li>
+                <li>• CFO → CEO communication gaps</li>
+              </ul>
+            </div>
+            <div class="glass rounded-xl p-4">
+              <p class="text-xs font-semibold text-slate-400 mb-1 uppercase tracking-[0.16em]">With CFOBuddy</p>
+              <ul class="space-y-1.5 text-slate-200">
+                <li>• Three calm CEO signals</li>
+                <li>• CFO-grade logic behind each color</li>
+                <li>• Scenarios answered in plain language</li>
+                <li>• Fewer “we have 3 months left” calls</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-2xl p-5 md:p-6 text-sm space-y-3 border border-slate-700/70">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.18em]">Problem summary</p>
+          <p class="text-slate-200">
+            Traditional BI is complex, reactive and slow for real-time quick commerce decisions.
+          </p>
+          <p class="text-slate-300">
+            CFOBuddy replaces scattered dashboards with a single financial decision OS tuned for
+            quick commerce economics and operational bottlenecks.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUTION / HOW IT WORKS -->
+    <section id="solution" class="fade">
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-7">
+        <div>
+          <div class="inline-flex items-center gap-2 badge px-3 py-1.5 rounded-full text-[0.63rem] text-slate-300 mb-3">
+            <!-- Heroicon: Cpu Chip -->
+            <svg class="h-3.5 w-3.5 text-brand-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    d="M9.75 9.75h4.5v4.5h-4.5zM6 9.75A2.25 2.25 0 0 1 8.25 7.5h7.5A2.25 2.25 0 0 1 18 9.75v4.5A2.25 2.25 0 0 1 15.75 16.5h-7.5A2.25 2.25 0 0 1 6 14.25zM9 3v1.5M12 3v1.5M15 3v1.5M9 19.5V21M12 19.5V21M15 19.5V21M3 9h1.5M3 12h1.5M3 15h1.5M19.5 9H21M19.5 12H21M19.5 15H21" />
+            </svg>
+            CFOBuddy system
+          </div>
+          <h2 class="text-2xl md:text-3xl font-semibold mb-2">
+            AI that thinks like a CFO, speaks like a CEO.
+          </h2>
+          <p class="text-sm text-slate-300 max-w-xl">
+            Under the hood: agents, RAG and CV signals. On the surface: three simple,
+            explainable signals the CEO can repeat to the board.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <div class="glass rounded-xl p-4 space-y-2">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.18em]">1 • CFOBuddy</p>
+          <p class="text-slate-100 font-medium">CFO AI Assistant</p>
+          <p class="text-slate-300">
+            Answers “what if?” questions on discounts, burn and ops using Agentic RAG over your finance and fulfillment data.
+          </p>
+        </div>
+
+        <div class="glass rounded-xl p-4 space-y-2">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.18em]">2 • CFO Intelligence Layer</p>
+          <p class="text-slate-100 font-medium">Financial + Operational Brain</p>
+          <p class="text-slate-300">
+            A metrics engine, CV signals and orchestrated agents (CFO, Ops, Strategy, Supervisor) that agree on one view of truth.
+          </p>
+        </div>
+
+        <div class="glass rounded-xl p-4 space-y-2">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.18em]">3 • Pulse</p>
+          <p class="text-slate-100 font-medium">CEO Confidence Dashboard</p>
+          <p class="text-slate-300">
+            Just three signals with color and a single line of context. If this screen feels calm, the business is under control.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PERSONAS: CFO / CEO -->
+    <section id="personas" class="fade">
+      <div class="relative overflow-hidden rounded-3xl border border-slate-800/80 bg-gradient-to-br from-slate-950 via-slate-950/80 to-slate-900/60">
+        <!-- soft gradient blobs -->
+        <div class="pointer-events-none absolute -top-32 -left-10 h-64 w-64 rounded-full bg-brand-500/20 blur-3xl opacity-60"></div>
+        <div class="pointer-events-none absolute -bottom-40 right-0 h-72 w-72 rounded-full bg-sky-500/15 blur-3xl opacity-60"></div>
+
+        <div class="relative z-10 px-5 sm:px-7 md:px-9 py-7 md:py-9 space-y-8">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <div class="inline-flex items-center gap-2 badge px-3 py-1.5 rounded-full text-[0.63rem] text-slate-300 mb-2">
+                <!-- Heroicon: Users -->
+                <svg class="h-3.5 w-3.5 text-brand-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM4.501 20.118A6.004 6.004 0 0 1 9 15.75h6a6.003 6.003 0 0 1 4.5 2.118" />
+                </svg>
+                For CFOs & CEOs
+              </div>
+              <h2 class="text-2xl md:text-3xl font-semibold">Two homes in one product.</h2>
+              <p class="mt-2 text-sm text-slate-300 max-w-xl">
+                CFOBuddy keeps the CFO in control and the CEO calm. One intelligence layer, two dedicated modes.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-5 md:gap-6">
+            <!-- CFO column -->
+            <div class="space-y-3">
+              <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-slate-900/60 px-3 py-1.5 text-[0.7rem] text-emerald-200">
+                <!-- Heroicon: Banknotes -->
+                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        d="M3.75 7.5h16.5v9H3.75zM7.5 9.75a2.25 2.25 0 0 1-2.25-2.25M18.75 9.75a2.25 2.25 0 0 0-2.25-2.25M7.5 17.25a2.25 2.25 0 0 0-2.25-2.25M18.75 17.25a2.25 2.25 0 0 1-2.25-2.25M12 13.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+                </svg>
+                Built for CFOs
+              </div>
+
+              <div class="grid gap-3">
+                <div class="glass float-soft rounded-2xl border border-slate-700/80 px-4 py-3 hover:border-emerald-400/60 transition group">
+                  <div class="flex items-start gap-3">
+                    <!-- Heroicon: Command Line -->
+                    <div class="mt-0.5 rounded-xl bg-emerald-500/10 p-2 text-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.4)] group-hover:scale-105 transition-transform">
+                      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                              d="m6.75 7.5 3 3-3 3M11.25 15h6" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="text-xs font-semibold text-slate-300 uppercase tracking-[0.16em]">CFO Co‑pilot</p>
+                      <p class="mt-1 text-sm text-slate-200">
+                        Ask “what if discounts go up 5%?” and get CFO-grade runway math, not a generic chatbot answer.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="glass float-soft rounded-2xl border border-slate-700/80 px-4 py-3 hover:border-emerald-400/60 transition group">
+                  <div class="flex items-start gap-3">
+                    <!-- Heroicon: Funnel -->
+                    <div class="mt-0.5 rounded-xl bg-emerald-500/10 p-2 text-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.4)] group-hover:scale-105 transition-transform">
+                      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                              d="M4.5 5.25h15L13.5 12v6.75l-3-1.5v-5.25z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="text-xs font-semibold text-slate-300 uppercase tracking-[0.16em]">Signal, not noise</p>
+                      <p class="mt-1 text-sm text-slate-200">
+                        Collapse 20 dashboards into three health checks you actually review with the CEO every week.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="glass float-soft rounded-2xl border border-slate-700/80 px-4 py-3 hover:border-emerald-400/60 transition group">
+                  <div class="flex items-start gap-3">
+                    <!-- Heroicon: Shield Check -->
+                    <div class="mt-0.5 rounded-xl bg-emerald-500/10 p-2 text-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.4)] group-hover:scale-105 transition-transform">
+                      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 3.75 5.25 6v5.25c0 4.28 2.88 6.93 6.75 8.25 3.87-1.32 6.75-3.97 6.75-8.25V6zM9.75 12.75 11.25 14.25 14.25 10.5" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="text-xs font-semibold text-slate-300 uppercase tracking-[0.16em]">Still CFO‑first</p>
+                      <p class="mt-1 text-sm text-slate-200">
+                        You approve thresholds, alerts and narratives before they ever hit the CEO’s phone.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CEO column -->
+            <div class="space-y-3">
+              <div class="inline-flex items-center gap-2 rounded-full border border-sky-400/40 bg-slate-900/60 px-3 py-1.5 text-[0.7rem] text-sky-200">
+                <!-- Heroicon: Briefcase -->
+                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 7.5V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v1.5M4.5 9h15M5.25 7.5h13.5A1.5 1.5 0 0 1 20.25 9v8.25A2.25 2.25 0 0 1 18 19.5H6A2.25 2.25 0 0 1 3.75 17.25V9A1.5 1.5 0 0 1 5.25 7.5Z" />
+                </svg>
+                Built for CEOs
+              </div>
+
+              <div class="grid gap-3">
+                <div class="glass float-soft rounded-2xl border border-slate-700/80 px-4 py-3 hover:border-sky-400/60 transition group">
+                  <div class="flex items-start gap-3">
+                    <!-- Heroicon: Presentation Chart Line -->
+                    <div class="mt-0.5 rounded-xl bg-sky-500/10 p-2 text-sky-300 shadow-[0_0_18px_rgba(56,189,248,0.5)] group-hover:scale-105 transition-transform">
+                      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                              d="M3.75 4.5h16.5M9 19.5l3-3 3 3m-9-6 2.25-3 2.25 1.5L15 7.5l2.25 3v6" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="text-xs font-semibold text-slate-300 uppercase tracking-[0.16em]">Board‑ready in one line</p>
+                      <p class="mt-1 text-sm text-slate-200">
+                        Each signal comes with a sentence you can literally read out in your board memo.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="glass float-soft rounded-2xl border border-slate-700/80 px-4 py-3 hover:border-sky-400/60 transition group">
+                  <div class="flex items-start gap-3">
+                    <!-- Heroicon: Bell Alert -->
+                    <div class="mt-0.5 rounded-xl bg-sky-500/10 p-2 text-sky-300 shadow-[0_0_18px_rgba(56,189,248,0.5)] group-hover:scale-105 transition-transform">
+                      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                              d="M14.25 18.75a2.25 2.25 0 0 1-4.5 0m8.91-3.72c-.48-.57-.66-1.17-.66-2.28V9a5.25 5.25 0 0 0-10.5 0v3.75c0 1.11-.18 1.71-.66 2.28A2.25 2.25 0 0 0 6.75 19.5h10.5a2.25 2.25 0 0 0 1.41-4.47Z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="text-xs font-semibold text-slate-300 uppercase tracking-[0.16em]">Calm, not constant pings</p>
+                      <p class="mt-1 text-sm text-slate-200">
+                        Only material changes flip colors. No feed, no doom‑scroll, just “are we okay?” in one glance.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="glass float-soft rounded-2xl border border-slate-700/80 px-4 py-3 hover:border-sky-400/60 transition group">
+                  <div class="flex items-start gap-3">
+                    <!-- Heroicon: Globe Alt -->
+                    <div class="mt-0.5 rounded-xl bg-sky-500/10 p-2 text-sky-300 shadow-[0_0_18px_rgba(56,189,248,0.5)] group-hover:scale-105 transition-transform">
+                      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0c1.657-1.657 3-4.582 3-9s-1.343-7.343-3-9m0 18C10.343 19.343 9 16.418 9 12s1.343-7.343 3-9M3.6 9h16.8M3.6 15h16.8" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="text-xs font-semibold text-slate-300 uppercase tracking-[0.16em]">Works like a YC tool</p>
+                      <p class="mt-1 text-sm text-slate-200">
+                        Clean, mobile‑first UI with soft gradients and focus states that feel like your favorite dev tools.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CEO SIGNALS (TABS) -->
+    <section id="signals" class="fade">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <div>
+          <div class="inline-flex items-center gap-2 badge px-3 py-1.5 rounded-full text-[0.63rem] text-slate-300 mb-2">
+            <!-- Heroicon: Chart Bar -->
+            <svg class="h-3.5 w-3.5 text-sky-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    d="M3.75 4.5v15.75h16.5M7.5 15.75V10.5M12 15.75V7.5M16.5 15.75v-6" />
+            </svg>
+            The three CEO signals
+          </div>
+          <h2 class="text-2xl md:text-3xl font-semibold">Exactly what the CEO sees.</h2>
+          <p class="mt-2 text-sm text-slate-300 max-w-xl">
+            The entire business, compressed into three daily signals with simple colors and sentences the CEO can repeat verbatim.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-[1.1fr,1.1fr] gap-6 items-start">
+        <!-- Tabs -->
+        <div class="space-y-3">
+          <button
+            class="signal-tab w-full text-left glass rounded-xl px-4 py-3 border border-slate-700 hover:border-emerald-400/70 transition flex items-center justify-between gap-3"
+            data-signal="cash" aria-selected="true">
+            <div class="flex items-center gap-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.8)]"></span>
+              <div>
+                <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.16em]">Signal 01</p>
+                <p class="text-sm font-semibold text-slate-50">Cash Health</p>
+              </div>
+            </div>
+            <span class="text-xs text-emerald-300 font-semibold">🟢 Calm runway</span>
+          </button>
+
+          <button
+            class="signal-tab w-full text-left glass rounded-xl px-4 py-3 border border-slate-700 hover:border-amber-400/70 transition flex items-center justify-between gap-3"
+            data-signal="flow" aria-selected="false">
+            <div class="flex items-center gap-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.85)]"></span>
+              <div>
+                <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.16em]">Signal 02</p>
+                <p class="text-sm font-semibold text-slate-50">Fulfillment Flow</p>
+              </div>
+            </div>
+            <span class="text-xs text-amber-200 font-semibold">🟡 Zone bottlenecks</span>
+          </button>
+
+          <button
+            class="signal-tab w-full text-left glass rounded-xl px-4 py-3 border border-slate-700 hover:border-sky-400/70 transition flex items-center justify-between gap-3"
+            data-signal="unit" aria-selected="false">
+            <div class="flex items-center gap-3">
+              <span class="h-2.5 w-2.5 rounded-full bg-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.9)]"></span>
+              <div>
+                <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.16em]">Signal 03</p>
+                <p class="text-sm font-semibold text-slate-50">Unit Economics Quality</p>
+              </div>
+            </div>
+            <span class="text-xs text-sky-200 font-semibold">🔵 Margin quality</span>
+          </button>
+        </div>
+
+        <!-- Panel -->
+        <div class="glass rounded-2xl p-5 md:p-6 text-sm space-y-4" id="signal-panel">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.16em]" id="signal-title">
+            Cash Health • Example
+          </p>
+          <p class="text-slate-100 font-medium" id="signal-headline">
+            Cash Health 🟢 — Runway: 11 months
+          </p>
+          <p class="text-slate-300" id="signal-body">
+            Under current burn and committed capex, you have 11 months of runway.
+            A 5% discount increase would reduce runway by ~1.2 months. Extending vendor payment terms by 10 days
+            recovers ~0.8 months of runway.
+          </p>
+
+          <div class="border-t border-slate-700/70 pt-3 space-y-2">
+            <p class="text-[0.75rem] text-slate-400 font-medium">Sample CFOBuddy Q&A</p>
+            <p class="text-[0.75rem] text-slate-300 italic" id="signal-qa">
+              “What happens if discounts increase 5%?” → “Runway impact is -1.2 months, primarily driven by East zone
+              order mix. Reducing marketing spend in low-ROI channels can offset ~60% of the impact.”
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE -->
+    <section id="architecture" class="fade">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+        <div>
+          <div class="inline-flex items-center gap-2 badge px-3 py-1.5 rounded-full text-[0.63rem] text-slate-300 mb-2">
+            <!-- Heroicon: Squares 2x2 -->
+            <svg class="h-3.5 w-3.5 text-brand-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    d="M4.5 4.5h7v7h-7v-7Zm8 0h7v7h-7v-7Zm-8 8h7v7h-7v-7Zm8 0h7v7h-7v-7Z" />
+            </svg>
+            Architecture in one glance
+          </div>
+          <h2 class="text-2xl md:text-3xl font-semibold">From raw signals to CEO clarity.</h2>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-[1.2fr,1fr] gap-6 items-start text-sm">
+        <div class="glass rounded-2xl p-5 md:p-6 space-y-4">
+          <ol class="space-y-2 text-slate-200">
+            <li><span class="font-semibold text-brand-200">1. Data in →</span> orders, fulfillment logs, dark store cameras (zone-level only), ledgers.</li>
+            <li><span class="font-semibold text-brand-200">2. Metrics →</span> runway, burn, contribution margin, delivery economics, discount impact.</li>
+            <li><span class="font-semibold text-brand-200">3. CV signals →</span> congestion, queues, packing delays (no faces, no employee monitoring).</li>
+            <li><span class="font-semibold text-brand-200">4. RAG →</span> Neon Postgres + pgvector, LangChain, Zep/zvec.</li>
+            <li><span class="font-semibold text-brand-200">5. Agents →</span> CFO, Ops, Strategy, Supervisor on LangGraph.</li>
+            <li><span class="font-semibold text-brand-200">6. Surfaces →</span> CFOBuddy chat + Pulse CEO dashboard on a FastAPI + PyTorch backend.</li>
+          </ol>
+        </div>
+
+        <div class="space-y-3">
+          <div class="glass rounded-xl p-4">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.16em] mb-2">Tech stack</p>
+            <ul class="space-y-1 text-slate-300 text-[0.8rem]">
+              <li><span class="font-semibold text-slate-100">Frontend:</span> Next.js (CFOBuddy chat, Pulse dashboard)</li>
+              <li><span class="font-semibold text-slate-100">Backend:</span> FastAPI, LangGraph, LangChain</li>
+              <li><span class="font-semibold text-slate-100">ML:</span> PyTorch for CV & anomaly detection</li>
+              <li><span class="font-semibold text-slate-100">RAG:</span> Neon Postgres + pgvector, Zep/zvec</li>
+              <li><span class="font-semibold text-slate-100">LLMs:</span> DeepSeek-first with open-source fallbacks</li>
+            </ul>
+          </div>
+
+          <div class="glass rounded-xl p-4">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.16em] mb-1">AI safety</p>
+            <ul class="space-y-1 text-slate-300 text-[0.8rem]">
+              <li>• No facial recognition, no employee monitoring</li>
+              <li>• Only aggregated operational signals</li>
+              <li>• CFO approval gates for sensitive thresholds</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUILD PHASES -->
+    <section id="phases" class="fade">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
+        <div>
+          <div class="inline-flex items-center gap-2 badge px-3 py-1.5 rounded-full text-[0.63rem] text-slate-300 mb-2">
+            <!-- Heroicon: Rocket Launch -->
+            <svg class="h-3.5 w-3.5 text-fuchsia-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    d="M4.5 19.5 9 15M15 9l4.5-4.5M6 10.5 9.75 6.75A8.25 8.25 0 0 1 17.25 4.5h.75V5.25a8.25 8.25 0 0 1-2.25 5.5L12 14.25M9 12l3 3" />
+            </svg>
+            Build roadmap
+          </div>
+          <h2 class="text-2xl md:text-3xl font-semibold">From prototype to production.</h2>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <div class="glass rounded-xl p-4 space-y-2">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.18em]">Phase 1–3</p>
+          <p class="text-slate-100 font-medium">Foundation</p>
+          <ul class="text-slate-300 text-[0.8rem] space-y-1">
+            <li>• Repo + environment setup</li>
+            <li>• Backend (FastAPI) skeleton</li>
+            <li>• Neon + pgvector, embedding pipeline</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-xl p-4 space-y-2">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.18em]">Phase 4–8</p>
+          <p class="text-slate-100 font-medium">Intelligence Layer</p>
+          <ul class="text-slate-300 text-[0.8rem] space-y-1">
+            <li>• RAG retrieval system</li>
+            <li>• LangGraph agent system</li>
+            <li>• CFO, Operations, Strategy, Supervisor agents</li>
+          </ul>
+        </div>
+
+        <div class="glass rounded-xl p-4 space-y-2">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.18em]">Phase 9+</p>
+          <p class="text-slate-100 font-medium">Interfaces & polish</p>
+          <ul class="text-slate-300 text-[0.8rem] space-y-1">
+            <li>• CFOBuddy chat interface</li>
+            <li>• Pulse CEO dashboard</li>
+            <li>• AI safety, governance, metrics</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / CLOSE -->
+    <section id="contact" class="fade">
+      <div class="glass rounded-2xl p-6 md:p-7 text-sm flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-[0.18em] mb-1">Who this is for</p>
+          <p class="text-slate-100 font-medium">
+            Quick commerce founders, CFOs and data leaders who want fewer surprises.
+          </p>
+          <p class="mt-2 text-slate-300">
+            We’re looking for 2–3 design partners to co-build the CFO → CEO intelligence layer you wish existed.
+          </p>
+        </div>
+        <div class="space-y-2">
+          <a href="mailto:founder@cfobuddy.app"
+             class="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-brand-500 via-cyan-400 to-sky-500 text-slate-950 shadow-glow">
+            <!-- Heroicon: Envelope -->
+            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                 viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    d="M3.75 5.25h16.5a.75.75 0 0 1 .75.75v12a.75.75 0 0 1-.75.75H3.75A.75.75 0 0 1 3 18V6a.75.75 0 0 1 .75-.75Zm0 0 8.25 7.5 8.25-7.5" />
+            </svg>
+            Email the builder
+          </a>
+          <p class="text-[0.7rem] text-slate-400">
+            Or plug this page into your deck as the “CFOBuddy overview” slide.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800/80 py-6 text-center text-[0.75rem] text-slate-500">
+    CFOBuddy • Not a dashboard. A financial decision operating system.
+  </footer>
+
+  <script>
+    // Intersection Observer for fade-in
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show')
+      })
+    }, { threshold: 0.1 })
+
+    document.querySelectorAll('.fade').forEach(el => observer.observe(el))
+
+    // Simple CEO signals tab switcher (no backend logic)
+    const signalContent = {
+      cash: {
+        title: 'Cash Health • Example',
+        headline: 'Cash Health 🟢 — Runway: 11 months',
+        body: 'Under current cash balance and monthly burn, you have 11 months of runway. Discount intensity is the main sensitivity: a 5% discount increase cuts runway by ~1.2 months, while a modest cost reset in low-ROI channels recovers most of it.',
+        qa: '“Where should we reduce cost without killing growth?” → “Marketing in Zone West and low-ROI influencer spend account for 40% of waste; trimming 15% here preserves ~90% of growth while extending runway by ~0.9 months.”'
+      },
+      flow: {
+        title: 'Fulfillment Flow • Example',
+        headline: 'Fulfillment Flow 🟡 — Congestion in East zone',
+        body: 'Computer vision on dark store cameras shows repeated queue build-up between 7–9 PM in East zone. SLA risk is creeping up even though average metrics look fine at day-level aggregation.',
+        qa: '“Why are SLAs slipping in the East?” → “Picking station congestion and packing delays at Store E-03 drive 60% of late orders; adding one flex picker at peak and re-slotting top 20 SKUs removes most of the risk.”'
+      },
+      unit: {
+        title: 'Unit Economics Quality • Example',
+        headline: 'Unit Economics 🔵 — Margins stable, discounts rising',
+        body: 'Contribution margin is stable, but effective discount rate has risen 3% over the last 6 weeks, mostly in long-distance orders. Delivery cost per order is also creeping up in two zones.',
+        qa: '“Which stores are hurting unit economics?” → “Store N-07 and E-03 drive most negative contribution; their mix of small baskets + high-distance orders + aggressive discounting is eroding overall margin by ~1.4%.”'
+      }
+    }
+
+    const tabs = document.querySelectorAll('.signal-tab')
+    const panelTitle = document.getElementById('signal-title')
+    const panelHeadline = document.getElementById('signal-headline')
+    const panelBody = document.getElementById('signal-body')
+    const panelQA = document.getElementById('signal-qa')
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const key = tab.dataset.signal
+        tabs.forEach(t => t.setAttribute('aria-selected', 'false'))
+        tab.setAttribute('aria-selected', 'true')
+
+        const { title, headline, body, qa } = signalContent[key]
+        panelTitle.textContent = title
+        panelHeadline.textContent = headline
+        panelBody.textContent = body
+        panelQA.textContent = qa
+      })
+    })
+  </script>
+</body>
+</html>
