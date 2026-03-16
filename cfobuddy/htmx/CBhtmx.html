@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CFOBuddy — HTMX Partial Version</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['DM Sans', 'system-ui', 'sans-serif'] },
+          fontSize: {
+            'body': ['1.0625rem', { lineHeight: '1.65' }],
+            'lead': ['1.1875rem', { lineHeight: '1.6' }],
+            'label': ['0.8125rem', { lineHeight: '1.4' }],
+          },
+          colors: {
+            brand: {
+              50: '#ecfeff', 100: '#cffafe', 500: '#22d3ee',
+              600: '#06b6d4', 700: '#0891b2',
+            },
+          },
+          boxShadow: {
+            'glow': '0 0 40px rgba(34,211,238,0.35)',
+            'soft': '0 4px 24px rgba(0,0,0,0.12)',
+          },
+          keyframes: {
+            'grid-move': {
+              '0%': { transform: 'translateY(0)' },
+              '100%': { transform: 'translateY(80px)' },
+            },
+            'float-soft': {
+              '0%': { transform: 'translateY(0px) translateZ(0) scale(1)' },
+              '25%': { transform: 'translateY(-6px) translateZ(0) scale(1.01)' },
+              '50%': { transform: 'translateY(0px) translateZ(0) scale(1)' },
+              '75%': { transform: 'translateY(6px) translateZ(0) scale(0.995)' },
+              '100%': { transform: 'translateY(0px) translateZ(0) scale(1)' },
+            },
+          },
+          animation: {
+            'grid-move': 'grid-move 32s linear infinite',
+            'float-soft': 'float-soft 11s ease-in-out infinite',
+          },
+        },
+      },
+    }
+  </script>
+
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body
+  class="text-slate-100 font-sans antialiased text-base"
+  style="background: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(30,41,59,0.4) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(34,211,238,0.06) 0%, transparent 40%),
+              #0f172a; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;"
+>
+  <div
+    class="fixed inset-0 opacity-40 -z-10 animate-grid-move"
+    style="background-image:
+      linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px);
+      background-size: 80px 80px;"
+  ></div>
+
+  <header id="nav-wrapper" hx-get="partials/nav.html" hx-trigger="load" hx-swap="innerHTML"></header>
+
+  <main id="top" class="max-w-6xl mx-auto px-5 sm:px-8 pb-32 pt-14 space-y-32 md:space-y-44">
+    <div id="hero-wrapper" hx-get="partials/hero.html" hx-trigger="load" hx-swap="innerHTML"></div>
+    <div id="problem-wrapper" hx-get="partials/problem.html" hx-trigger="load" hx-swap="innerHTML"></div>
+    <div id="solution-wrapper" hx-get="partials/solution.html" hx-trigger="load" hx-swap="innerHTML"></div>
+    <div id="personas-wrapper" hx-get="partials/personas.html" hx-trigger="load" hx-swap="innerHTML"></div>
+    <div id="signals-wrapper" hx-get="partials/signals.html" hx-trigger="load" hx-swap="innerHTML"></div>
+    <div id="architecture-wrapper" hx-get="partials/architecture.html" hx-trigger="load" hx-swap="innerHTML"></div>
+    <div id="phases-wrapper" hx-get="partials/phases.html" hx-trigger="load" hx-swap="innerHTML"></div>
+    <div id="contact-wrapper" hx-get="partials/contact.html" hx-trigger="load" hx-swap="innerHTML"></div>
+  </main>
+
+  <footer id="footer-wrapper" hx-get="partials/footer.html" hx-trigger="load" hx-swap="innerHTML"></footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

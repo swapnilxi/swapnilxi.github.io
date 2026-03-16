@@ -1,0 +1,93 @@
+<section id="signals" class="fade opacity-0 translate-y-6 transition-all duration-[800ms] [transition-timing-function:cubic-bezier(0.22,0.61,0.36,1)]">
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
+    <div>
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm text-slate-300 mb-4 bg-slate-800/70 border border-slate-400/25 tracking-[0.06em]">
+        <svg class="h-4 w-4 text-sky-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+             viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                d="M3.75 4.5v15.75h16.5M7.5 15.75V10.5M12 15.75V7.5M16.5 15.75v-6" />
+        </svg>
+        The three CEO signals
+      </div>
+      <h2 class="text-3xl md:text-4xl font-semibold leading-tight">Exactly what the CEO sees.</h2>
+      <p class="mt-4 text-body text-slate-300 max-w-xl leading-relaxed">
+        The entire business, compressed into three daily signals with simple colors and sentences the CEO can repeat verbatim.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-[1.1fr,1.1fr] gap-8 items-start">
+    <div class="space-y-4">
+      <button
+        class="signal-tab w-full text-left rounded-2xl px-5 py-4 border border-slate-600/50 hover:border-emerald-400/60 transition flex items-center justify-between gap-4 bg-[linear-gradient(160deg,rgba(30,41,59,0.85)_0%,rgba(15,23,42,0.92)_100%)] backdrop-blur-[16px] aria-[selected=true]:border-slate-400/40 aria-[selected=true]:bg-[linear-gradient(160deg,rgba(34,211,238,0.12)_0%,rgba(15,23,42,0.95)_100%)] aria-[selected=true]:shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+        data-signal="cash" aria-selected="true">
+        <div class="flex items-center gap-4">
+          <span class="h-3 w-3 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(74,222,128,0.7)]"></span>
+          <div>
+            <p class="text-sm font-semibold text-slate-400">Signal 01</p>
+            <p class="text-base font-semibold text-slate-50">Cash Health</p>
+          </div>
+        </div>
+        <span class="text-sm text-emerald-300 font-semibold">🟢 Calm runway</span>
+      </button>
+
+      <button
+        class="signal-tab w-full text-left rounded-2xl px-5 py-4 border border-slate-600/50 hover:border-amber-400/60 transition flex items-center justify-between gap-4 bg-[linear-gradient(160deg,rgba(30,41,59,0.85)_0%,rgba(15,23,42,0.92)_100%)] backdrop-blur-[16px] aria-[selected=true]:border-slate-400/40 aria-[selected=true]:bg-[linear-gradient(160deg,rgba(34,211,238,0.12)_0%,rgba(15,23,42,0.95)_100%)] aria-[selected=true]:shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+        data-signal="flow" aria-selected="false">
+        <div class="flex items-center gap-4">
+          <span class="h-3 w-3 rounded-full bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.7)]"></span>
+          <div>
+            <p class="text-sm font-semibold text-slate-400">Signal 02</p>
+            <p class="text-base font-semibold text-slate-50">Fulfillment Flow</p>
+          </div>
+        </div>
+        <span class="text-sm text-amber-200 font-semibold">🟡 Zone bottlenecks</span>
+      </button>
+
+      <button
+        class="signal-tab w-full text-left rounded-2xl px-5 py-4 border border-slate-600/50 hover:border-sky-400/60 transition flex items-center justify-between gap-4 bg-[linear-gradient(160deg,rgba(30,41,59,0.85)_0%,rgba(15,23,42,0.92)_100%)] backdrop-blur-[16px] aria-[selected=true]:border-slate-400/40 aria-[selected=true]:bg-[linear-gradient(160deg,rgba(34,211,238,0.12)_0%,rgba(15,23,42,0.95)_100%)] aria-[selected=true]:shadow-[0_8px_32px_rgba(0,0,0,0.2)]"
+        data-signal="unit" aria-selected="false">
+        <div class="flex items-center gap-4">
+          <span class="h-3 w-3 rounded-full bg-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.7)]"></span>
+          <div>
+            <p class="text-sm font-semibold text-slate-400">Signal 03</p>
+            <p class="text-base font-semibold text-slate-50">Unit Economics Quality</p>
+          </div>
+        </div>
+        <span class="text-sm text-sky-200 font-semibold">🔵 Margin quality</span>
+      </button>
+    </div>
+
+    <div class="rounded-2xl p-6 md:p-8 text-body space-y-5 border border-slate-600/50 bg-[linear-gradient(160deg,rgba(30,41,59,0.85)_0%,rgba(15,23,42,0.92)_100%)] backdrop-blur-[16px]" id="signal-panel">
+      <div class="flex items-center gap-2">
+        <span class="rounded-lg bg-sky-500/15 p-1.5 text-sky-300">
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.5v15.75h16.5M7.5 15.75V10.5M12 15.75V7.5M16.5 15.75v-6" /></svg>
+        </span>
+        <p class="text-sm font-semibold text-slate-400" id="signal-title">
+          Cash Health · Example
+        </p>
+      </div>
+      <p class="text-slate-100 font-medium text-[1.0625rem]" id="signal-headline">
+        Cash Health 🟢 — Runway: 11 months
+      </p>
+      <p class="text-slate-300 leading-relaxed" id="signal-body">
+        Under current burn and committed capex, you have 11 months of runway.
+        A 5% discount increase would reduce runway by ~1.2 months. Extending vendor payment terms by 10 days
+        recovers ~0.8 months of runway.
+      </p>
+
+      <div class="border-t border-slate-600/50 pt-5 space-y-3">
+        <div class="flex items-center gap-2">
+          <span class="rounded-lg bg-brand-500/15 p-1.5 text-brand-300">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" /></svg>
+          </span>
+          <p class="text-sm text-slate-400 font-medium">Sample CFOBuddy Q&A</p>
+        </div>
+        <p class="text-sm text-slate-300 italic leading-relaxed" id="signal-qa">
+          "What happens if discounts increase 5%?" → "Runway impact is -1.2 months, primarily driven by East zone
+          order mix. Reducing marketing spend in low-ROI channels can offset ~60% of the impact."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
