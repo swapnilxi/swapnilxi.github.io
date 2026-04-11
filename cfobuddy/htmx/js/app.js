@@ -22,15 +22,35 @@
     }
   };
 
+  var fadeObserver = null;
+  var fadeSeen = new WeakSet();
+
+  function revealFadeEl(el) {
+    el.classList.add('opacity-100', 'translate-y-0');
+    el.classList.remove('opacity-0', 'translate-y-6');
+  }
+
   function initFadeObserver() {
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('opacity-100', 'translate-y-0');
-        entry.target.classList.remove('opacity-0', 'translate-y-6');
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade').forEach(function (el) { observer.observe(el); });
+    if (!fadeObserver) {
+      fadeObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          revealFadeEl(entry.target);
+        });
+      }, { threshold: 0.06, rootMargin: '120px 0px 120px 0px' });
+    }
+
+    document.querySelectorAll('.fade').forEach(function (el) {
+      if (fadeSeen.has(el)) return;
+      fadeSeen.add(el);
+      fadeObserver.observe(el);
+      // HTMX-injected sections mount after the first paint; reveal if already on-screen or just below the fold.
+      var r = el.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      if (r.top < vh + 160 && r.bottom > -160) {
+        revealFadeEl(el);
+      }
+    });
   }
 
   var signalTabsBound = false;
